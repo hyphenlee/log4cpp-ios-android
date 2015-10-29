@@ -1,0 +1,2 @@
+/Users/lihaifeng/work/log4cpp/build/CMakeFiles/log4cpp.dir
+/Users/lihaifeng/work/log4cpp/build/CMakeFiles/cpufeatures.dir
