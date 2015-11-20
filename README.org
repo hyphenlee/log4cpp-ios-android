@@ -1,2 +1,21 @@
 log4cpp port for ios and android
+* For iOS
+Edit ios_build.sh to set platfrom at first.
 
+ ./ios_build.sh
+
+This will generate Xcode project file under ./build. Open
+log4cpp.xcodeproj by Xcode and build it, then it would generate
+liblog4cpp.a under build/bin . Change
+ios_build.sh for different lib version, and use 
+
+lipo -output libuniversal.a -create liba.a libb.b
+
+to create a universal library for different platfrom.
+* For Android
+To build for Android you should edit android_build.sh to set arguments
+like ndk path , api level at first.
+
+./android_build.sh
+
+Then the liblog4cpp.a would generate under build directory automatically.

@@ -1,3 +1,0 @@
-/Users/lihaifeng/work/log4cpp/build/CMakeFiles/log4cpp.dir
-/Users/lihaifeng/work/log4cpp/build/CMakeFiles/ALL_BUILD.dir
-/Users/lihaifeng/work/log4cpp/build/CMakeFiles/ZERO_CHECK.dir
