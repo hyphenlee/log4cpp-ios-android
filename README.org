@@ -1,0 +1,2 @@
+log4cpp port for ios and android
+

@@ -18,6 +18,7 @@ IF (WIN32)
   ADD_DEFINITIONS ( -D_CRT_SECURE_NO_WARNINGS )
 ELSE (WIN32)
   IF (APPLE)
+    message("handle for apple")
     ADD_DEFINITIONS ( -DNDEBUG -DLOG4CPP_HAVE_SSTREAM )
   ELSE (APPLE)
     ADD_DEFINITIONS ( -pthread -DNDEBUG -DLOG4CPP_HAVE_SSTREAM )
@@ -30,7 +31,23 @@ ELSE ( CMAKE_BUILD_TYPE MATCHES "Debug" )
   SET ( LOG4CPP_LIBRARY_NAME "log4cpp" )
 ENDIF ( CMAKE_BUILD_TYPE MATCHES "Debug" )
 
-ADD_LIBRARY ( ${LOG4CPP_LIBRARY_NAME}
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+
+IF(ANDROID)
+  message("handle for android")
+  SET(CMAKE_CXX_FLAGS "-fexceptions  -std=c++11   ${CMAKE_CXX_FLAGS} ")
+  # set(prebuilt_stdcxx_PATH /Users/lihaifeng/.ndk/sources/cxx-stl/stlport/libs/armeabi)
+  # include_directories(${prebuilt_stdcxx_PATH}/include
+  # ${prebuilt_stdcxx_PATH}/libs/armeabi/include)
+  #include_directories(${ANDROID_NDK}/sources/cxx-stl/stlport/stlport)
+  #message(android_ndk:${ANDROID_NDK})
+  #LINK_DIRECTORIES(${ANDROID_NDK}/sources/cxx-stl/stlport/libs/${ANDROID_ABI})
+elseif(IOS)
+  message("handle for ios")
+ENDIF()
+
+ADD_LIBRARY ( ${LOG4CPP_LIBRARY_NAME} STATIC
   src/Appender.cpp
   src/AppenderSkeleton.cpp
   src/AppendersFactory.cpp
@@ -79,6 +96,9 @@ ADD_LIBRARY ( ${LOG4CPP_LIBRARY_NAME}
   src/PortabilityImpl.cpp
   src/AbortAppender.cpp
   )
+IF(ANDROID)
+#  TARGET_LINK_LIBRARIES(${LOG4CPP_LIBRARY_NAME} stlport_shared)
+ENDIF()
 
 IF (WIN32)
   TARGET_LINK_LIBRARIES (${LOG4CPP_LIBRARY_NAME} kernel32 user32 ws2_32 advapi32 )
@@ -94,7 +114,7 @@ INSTALL (
   PATTERN "*.in" EXCLUDE
   )
 
-INSTALL (
-  TARGETS ${LOG4CPP_LIBRARY_NAME}
-  ARCHIVE DESTINATION lib
-  )
+# INSTALL (
+#   TARGETS ${LOG4CPP_LIBRARY_NAME}
+#   ARCHIVE DESTINATION lib
+#   )
